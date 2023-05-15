@@ -10,6 +10,10 @@ export const env = createEnv({
     NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
     NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
   },
+  // `runtimeEnv` is strict by default, meaning we have to destructure all the
+  // keys manually. This is due to how Next.js bundles environment variables
+  // and only explicitly accessed variables are included in the bundle.
+  // Missing keys will result in a type error.
   runtimeEnv: {
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
