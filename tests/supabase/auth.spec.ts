@@ -76,3 +76,58 @@ test("authenticate using GoTrue API directly", async ({ request }) => {
   expect(res).toBeOK();
   expect(await res.json()).toHaveProperty("access_token");
 })
+
+test("supabase-js persists session in localStorage", async ({ page }) => {
+  // Navigate to the home page
+  await page.goto("/");
+
+  // Log all uncaught errors to the terminal
+  page.on('pageerror', exception => {
+    console.log(`Uncaught exception: "${exception}"`);
+  });
+
+  // Log all console.logs to the terminal
+  page.on("console", async msg => {
+    const values = [];
+    for (const arg of msg.args())
+      values.push(await arg.jsonValue());
+    console.log(...values);
+  });
+
+  // Add the Supabase library to the page
+  await page.addScriptTag({ path: "./node_modules/@supabase/supabase-js/dist/umd/supabase.js" });
+
+  // Start waiting for the response before we add our script
+  const supabaseResponse = page.waitForResponse(req => req.url().startsWith(env.NEXT_PUBLIC_SUPABASE_URL));
+
+  await page.addScriptTag({ content: `
+    (async () => {
+      // The supabase global is added from the previous script tag
+      const client = supabase.createClient(
+        "${env.NEXT_PUBLIC_SUPABASE_URL}",
+        "${env.NEXT_PUBLIC_SUPABASE_ANON_KEY}", {
+          auth: {
+            persistsession: true,
+            autoRefreshToken: true,
+          },
+        },
+      );
+
+      // Save session to localStorage
+      await client.auth.signInWithPassword({
+        email: "${env.SUPABASE_TEST_EMAIL}",
+        password: "${env.SUPABASE_TEST_PASSWORD}",
+      });
+    })();
+  `});
+
+  // Resolve the response for our script before continuing
+  await supabaseResponse;
+
+  // Get the browser context this page belongs to
+  const ctx = page.context();
+
+  // Write the storage state to a file
+  const storageState = await ctx.storageState({ path: "./playwright/.auth/storageState.json" });
+  expect(storageState.origins).toHaveLength(1);
+})
