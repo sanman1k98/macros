@@ -9,6 +9,7 @@ export const env = createEnv({
   client: {
     NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
     NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
+    NEXT_PUBLIC_SITE_ORIGIN: z.string().url(),
   },
   // `runtimeEnv` is strict by default, meaning we have to destructure all the
   // keys manually. This is due to how Next.js bundles environment variables
@@ -17,6 +18,7 @@ export const env = createEnv({
   runtimeEnv: {
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    NEXT_PUBLIC_SITE_ORIGIN: process.env.NEXT_PUBLIC_SITE_ORIGIN,
     SUPABASE_TEST_EMAIL: process.env.SUPABASE_TEST_EMAIL,
     SUPABASE_TEST_PASSWORD: process.env.SUPABASE_TEST_PASSWORD,
   },
