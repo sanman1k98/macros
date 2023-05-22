@@ -151,3 +151,58 @@ test("supabase-js persists session in localStorage", async ({ page }) => {
   const storageState = await ctx.storageState({ path: "./playwright/.auth/storageState.json" });
   expect(storageState.origins).toHaveLength(1);
 })
+
+test.describe("saved storageState", () => {
+  test.use({ storageState: "./playwright/.auth/storageState.json" });
+
+  test("can get user from persisted session", async ({ request }) => {
+    const url = new URL("/auth/v1/user", env.NEXT_PUBLIC_SUPABASE_URL);
+
+    const storageState = await request.storageState();
+    expect(storageState.origins).toHaveLength(1);
+
+    const item = storageState.origins.pop();
+    expect(item?.origin).toEqual(env.NEXT_PUBLIC_SITE_ORIGIN);
+
+    expect(item?.localStorage).toHaveLength(1);
+    /**
+      * {
+      *   "name": "sb-fbzquxjugehuhoonbgwc-auth-token",
+      *   "value": "...",
+      * }
+      */
+    const session = item?.localStorage.pop();
+
+    /** Breakdown of this regular expression pattern:
+      * `/^sb-(\w+)-auth-token$/`
+      *
+      * > "^sb-"
+      * Matches a string that begins with "sb-".
+      *
+      * > "(\w*)"
+      * The string "\w+" matches or more alphabet characters, and the parenthesis make it a "capture group".
+      *
+      * > "-auth-token$"
+      * Matches a string that ends with "-auth-token".
+      *
+      */
+    const matcher = /^sb-(\w+)-auth-token$/;
+    expect(session?.name).toMatch(matcher);
+
+    expect(session?.value).toBeDefined();
+    const parsedSession = JSON.parse(session!.value) as AuthSession;
+    const access_token = parsedSession.access_token;
+
+    const res = await request.get(url.toString(), {
+      headers: {
+        apikey: env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${access_token}`
+      },
+    });
+    expect(res).toBeOK();
+    const data = await res.json();
+
+    expect(data).toHaveProperty("email");
+    expect(data.email).toEqual(env.SUPABASE_TEST_EMAIL);
+  })
+})
