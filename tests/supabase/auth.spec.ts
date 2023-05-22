@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { createClient } from "@supabase/supabase-js";
+import { AuthSession, createClient } from "@supabase/supabase-js";
 import { getSessionState, updateSessionState } from "./session";
 import { env } from "@/env.mjs";
 
@@ -62,20 +62,40 @@ test("get user from saved session", async () => {
   * }'
   * ```
   */
-test("authenticate using GoTrue API directly", async ({ request }) => {
-  const url = new URL("/auth/v1/token?grant_type=password", env.NEXT_PUBLIC_SUPABASE_URL);
-  const res = await request.post(url.toString(), {
-    headers: {
-      apikey: env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    },
-    data: {
-      email: env.SUPABASE_TEST_EMAIL,
-      password: env.SUPABASE_TEST_PASSWORD,
-    },
+test.describe("GoTrue API", async () => {
+  let token: string;
+
+  test("get an access token", async ({ request }) => {
+    const url = new URL("/auth/v1/token?grant_type=password", env.NEXT_PUBLIC_SUPABASE_URL);
+    const res = await request.post(url.toString(), {
+      headers: {
+        apikey: env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+      },
+      data: {
+        email: env.SUPABASE_TEST_EMAIL,
+        password: env.SUPABASE_TEST_PASSWORD,
+      },
+    });
+
+    expect(res).toBeOK();
+    const data = await res.json() as AuthSession;
+
+    expect(data).toHaveProperty("access_token");
+    token = data.access_token;
   });
-  expect(res).toBeOK();
-  expect(await res.json()).toHaveProperty("access_token");
-})
+
+  test("use an access token", async ({ request }) => {
+    const url = new URL("/auth/v1/user", env.NEXT_PUBLIC_SUPABASE_URL);
+    const res = await request.get(url.toString(), {
+      headers: {
+        apikey: env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    expect(res).toBeOK();
+  });
+});
 
 test("supabase-js persists session in localStorage", async ({ page }) => {
   // Navigate to the home page
