@@ -17,6 +17,7 @@ test.beforeAll(async ({ browser }) => {
   const page = await ctx.newPage();
   await page.goto("/");
 
+  // TODO: use the @supabase/auth-helpers-shared library
   // Add the Supabase library to the page
   await page.addScriptTag({ path: "./node_modules/@supabase/supabase-js/dist/umd/supabase.js" });
 
@@ -92,8 +93,8 @@ test.describe("/api/profile/", async () => {
       },
     });
 
+    expect(res).toBeOK();
     const data = await res.json();
     expect(data).toBeDefined();
-    expect(res).toBeOK();
   });
 });
