@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.33.0",
-    "esbuild": "^0.17.19"
+    "esbuild": "^0.17.19",
+    "supabase": "^1.62.5"
   }
 }
