@@ -11,7 +11,9 @@ Step 3: Ask user for their food allergies
 Step 4: Ask user for any notable medical conditions that interfere with diet (ex: if they have something like diabetes)
 Step 5: Ask user for their dietary restrictions
 
+Step 6: Ask user their level of activity
 
-Step 6: Suggest up to 5 possible diet plans for the user to choose
-Step 7: Save the plan so that future recommedations are based on the above saved information
+
+Step 7: Suggest up to 5 possible diet plans for the user to choose
+Step 8: Save the plan so that future recommedations are based on the above saved information
 
