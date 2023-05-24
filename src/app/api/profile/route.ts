@@ -11,17 +11,14 @@ export async function GET() {
     cookies,
   });
 
+  // Gets session information from the "supabase-auth-token" cookie
   const { data: { session }, error: authError } = await supabase.auth.getSession();
 
   if (!session || authError) return NextResponse.json(authError, {
     status: 500,
   });
 
-  const {
-    data: profiles,
-    status,
-    statusText,
-  } = await supabase
+  const { data: profiles, status, statusText } = await supabase
     .from("profiles")
     .select("*")
     .eq("id", session.user.id)
