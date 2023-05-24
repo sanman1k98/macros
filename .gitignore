@@ -36,3 +36,5 @@ next-env.d.ts
 
 # playwright
 playwright/.auth
+playwright/out/
+test-results/
