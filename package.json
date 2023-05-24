@@ -29,6 +29,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@playwright/test": "^1.33.0"
+    "@playwright/test": "^1.33.0",
+    "esbuild": "^0.17.19"
   }
 }
