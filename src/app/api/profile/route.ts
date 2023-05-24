@@ -11,10 +11,9 @@ export async function GET() {
     cookies,
   });
 
-  // FIXME: AuthApiError; see supabase/supabase-js#641
-  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  const { data: { session }, error: authError } = await supabase.auth.getSession();
 
-  if (!user || authError) return NextResponse.json(authError, {
+  if (!session || authError) return NextResponse.json(authError, {
     status: 500,
   });
 
@@ -25,7 +24,8 @@ export async function GET() {
   } = await supabase
     .from("profiles")
     .select("*")
-    .eq("id", user.id);
+    .eq("id", session.user.id)
+    .single();
 
   return NextResponse.json(profiles, {
     status: status,
