@@ -39,7 +39,6 @@ export async function GET() {
   });
 
   try {
-    // FIXME: HTTP status code 429; see openai/openai-node#168
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: `Hey! My name is ${profile.full_name}, can you recommend me some healthy food?`,
@@ -50,9 +49,9 @@ export async function GET() {
     return NextResponse.json(completion, {
       status: 200,
     });
-  } catch (error) {
+  } catch (error: any) {
     return NextResponse.json(error, {
-      status: error.response.status || 500,
+      status: (error.response as Response).status,
       statusText: "OpenAI responded with error",
     });
   }
