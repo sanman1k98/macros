@@ -12,7 +12,10 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI
   },
 
+  globalSetup: require.resolve("./tests/auth.setup.ts"),
+
   use: {
     baseURL: 'http://localhost:3000',
-  }
+    storageState: "./playwright/.auth/storageState.json",
+  },
 });
