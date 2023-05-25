@@ -46,8 +46,9 @@ export async function GET() {
       temperature: 0.7,
     });
 
-    return NextResponse.json(completion, {
-      status: 200,
+    return NextResponse.json(completion.data, {
+      status: status,
+      statusText: completion.statusText,
     });
   } catch (error: any) {
     return NextResponse.json(error, {
