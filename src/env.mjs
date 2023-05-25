@@ -5,6 +5,8 @@ export const env = createEnv({
   server: {
     SUPABASE_TEST_EMAIL: z.string().email(),
     SUPABASE_TEST_PASSWORD: z.string(),
+    OPENAI_API_KEY: z.string(),
+    OPENAI_ORGANIZATION_ID: z.string(),
   },
   client: {
     NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
@@ -21,5 +23,7 @@ export const env = createEnv({
     NEXT_PUBLIC_SITE_ORIGIN: process.env.NEXT_PUBLIC_SITE_ORIGIN,
     SUPABASE_TEST_EMAIL: process.env.SUPABASE_TEST_EMAIL,
     SUPABASE_TEST_PASSWORD: process.env.SUPABASE_TEST_PASSWORD,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+    OPENAI_ORGANIZATION_ID: process.env.OPENAI_ORGANIZATION_ID,
   },
 });
