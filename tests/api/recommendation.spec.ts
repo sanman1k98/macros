@@ -9,7 +9,7 @@ test.describe("/api/recommendation", async () => {
     const res = await request.get(url.toString());
 
     const data = await res.json();
+    console.log(JSON.stringify(data, null, 2));
     expect(res).toBeOK();
-    console.log(data);
   });
 });
