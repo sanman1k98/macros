@@ -43,6 +43,8 @@ export async function GET() {
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: `Hey! My name is ${profile.full_name}, can you recommend me some healthy food?`,
+      max_tokens: 100,
+      temperature: 0.7,
     });
 
     return NextResponse.json(completion, {
@@ -51,6 +53,7 @@ export async function GET() {
   } catch (error) {
     return NextResponse.json(error, {
       status: error.response.status || 500,
+      statusText: "OpenAI responded with error",
     });
   }
 }
