@@ -71,7 +71,7 @@ let ACCESS_TOKEN: string;
 
 test.describe("/api/profile/", async () => {
   // Specify the storage state that has the session stored
-  test.use({ storageState: STORAGE_STATE });
+  // test.use({ storageState: STORAGE_STATE });
 
 //   test("get the user with specified browser context", async ({ request }) => {
 //     const url = new URL("/auth/v1/user", env.NEXT_PUBLIC_SUPABASE_URL);
