@@ -7,6 +7,8 @@ export const env = createEnv({
     SUPABASE_TEST_PASSWORD: z.string(),
     OPENAI_API_KEY: z.string(),
     OPENAI_ORGANIZATION_ID: z.string(),
+    NUTRITIONIX_APP_ID: z.string(),
+    NUTRITIONIX_APP_KEY: z.string(),
   },
   client: {
     NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
@@ -25,5 +27,7 @@ export const env = createEnv({
     SUPABASE_TEST_PASSWORD: process.env.SUPABASE_TEST_PASSWORD,
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     OPENAI_ORGANIZATION_ID: process.env.OPENAI_ORGANIZATION_ID,
+    NUTRITIONIX_APP_ID: process.env.NUTRITIONIX_APP_ID,
+    NUTRITIONIX_APP_KEY: process.env.NUTRITIONIX_APP_KEY,
   },
 });
