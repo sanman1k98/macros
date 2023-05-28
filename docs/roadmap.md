@@ -39,9 +39,6 @@ Able to make food recommendations by pulling data from Nutrinix and running it t
       - This can be part of the subscription plan
 
 
-
-
-
 # Future plans
 
 > Potential ideas to add down the line.
@@ -55,3 +52,8 @@ Able to make food recommendations by pulling data from Nutrinix and running it t
 - MACROS: Clinical Edition
   - clinical usage
 
+## Version 1:
+
+- Pre-loaded menus from popular food chains (Nutrinix API)
+- No need for geolocation for starting
+-  
