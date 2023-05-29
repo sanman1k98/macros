@@ -52,8 +52,48 @@ Able to make food recommendations by pulling data from Nutrinix and running it t
 - MACROS: Clinical Edition
   - clinical usage
 
-## Version 1:
+# Current Deliverable for June 30th: Version 0 of MVP
 
-- Pre-loaded menus from popular food chains (Nutrinix API)
-- No need for geolocation for starting
--  
+## Features:
+- Allow users to create a menu list
+- Allow users to select from a list of restaurants from Nutrinix (pre-loading the menus)
+- Generate 3-5 recommendations from the list of menu items available from the selected restaurant
+- Allow users to select from the recommendations and save the recommendations as a menu list for that specific restaurant
+- Allow users to view their recommendation generated menu
+    - For now, if users want to have a new set of recommendations, they will have to repeat the process of making a menu rather than editing an existing menu
+
+## Workflow:
+- ### Authentication:
+    - Sign Up:
+        - First Name
+        - Last Name
+        - DOB
+        - Gmail
+    - Upon signing up, user is brought to the landing page
+    - When the user clicks on the “+” button to go to the recommendations generation page, it will redirect to the My Profile Setup first
+    - ### My Profile Setup:
+        - What are your nutritional goals ?
+            - Lose Weight
+            - Gain Weight
+            - Gain Muscle
+            - Maintain Weight
+        - Height
+        - Weight
+        - Do you have Diabetes ?
+            - I do
+            - I do not
+        - Any Vitamin Deficiencies ?
+        - What is your level of activity ?
+            - Little to no exercise
+            - 1-3 days a week
+            - 3-5 days a week
+            - Every day
+    - Using this data, each of this variables should parse into the OpenAI prompt to generate the recommendations
+        - Ex in Python:
+            - Prompt: f”Be an expert nutritionist and provide me three food recommendations from {restaurant} and give each one a rating from very bad, bad, okay, good, and very good. To describe my medical conditions, it is based on the following: the nutritional goal is {nutrional_goal}, my height is {height}, my weight is {weight}, I have {vitamin_def} deficiencies, my level of activity is working out {working_out}, and I {diabetes} have diabetes. Recommend me only from the following list {restaurant_lst}”
+        - The above is just an example
+    - From here the generated recommendations should be displayed as clickable cards or clickable list options where the user can select one or more of the recommendations
+    - Upon selections, user can now save the selected recommendations as a menu list
+    - The menu list can now be viewed on the landing page and later can be found in the history tab for the user to view
+- ## Settings:
+    - User can modify all aspects of their MyProfile Setup but cannot modify the Sign Up setup
