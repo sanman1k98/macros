@@ -1,4 +1,4 @@
-import { BrowserContext, expect, test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { env } from "@/env.mjs";
 
 test.describe("/api/recommendation", async () => {
@@ -7,16 +7,14 @@ test.describe("/api/recommendation", async () => {
     const url = new URL("/api/recommendation", env.NEXT_PUBLIC_SITE_ORIGIN);
 
     const res = await request.get(url.toString());
+    expect.soft(res).toBeOK();
 
-    const status = res.status()
-    const data = await res.json();
-
-    if (status === 429) {
+    if (res.status() === 429) {
       console.log("Your token usage might be expired");
       return;
     }
 
-    console.log(JSON.stringify(data, null, 2));
-    expect(res).toBeOK();
+    const data = await res.json();
+    console.log(data);
   });
 });
