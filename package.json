@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "playwright test",
+    "test:list": "playwright test --list",
     "test:interactive": "playwright test --ui",
     "supabase": "supabase"
   },
