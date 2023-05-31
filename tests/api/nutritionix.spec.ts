@@ -25,11 +25,12 @@ test.describe("GET", async () => {
     expect.soft(branded.length).toBeGreaterThan(1);
 
     branded.map((item: any) => {
-      console.log(item);
-      expect.soft(item).toHaveProperty("food_name");
       expect.soft(item).toHaveProperty("brand_name");
       expect.soft(item).toHaveProperty("nix_brand_id");
       expect.soft(item).toHaveProperty("nix_item_id");
+      expect.soft(item).toHaveProperty("food_name");
+      // just print the food name
+      console.log(item.food_name);
     });
   });
 
@@ -57,11 +58,12 @@ test.describe("GET", async () => {
     expect.soft(branded.length).toBeGreaterThan(1);
 
     branded.map((item: any) => {
-      console.log(item);
       expect.soft(item).toHaveProperty("food_name");
       expect.soft(item).toHaveProperty("brand_name");
       expect.soft(item).toHaveProperty("nix_brand_id");
       expect.soft(item).toHaveProperty("nix_item_id");
+      // just print the food name
+      console.log(item.food_name);
     });
   });
 });
