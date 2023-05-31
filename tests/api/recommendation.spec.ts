@@ -1,9 +1,9 @@
 import { expect, test } from '@playwright/test';
 import { env } from "@/env.mjs";
 
-test.describe("/api/recommendation", async () => {
+test.describe("GET", async () => {
 
-  test("GET", async ({ request }) => {
+  test("get a recommendation", async ({ request }) => {
     const url = new URL("/api/recommendation", env.NEXT_PUBLIC_SITE_ORIGIN);
 
     const res = await request.get(url.toString());

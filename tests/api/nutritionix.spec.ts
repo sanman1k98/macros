@@ -2,9 +2,9 @@ import { expect, test } from '@playwright/test';
 import { env } from "@/env.mjs";
 import { URLSearchParams } from 'url';
 
-test.describe("/api/nutritionix/search", async () => {
+test.describe("GET", async () => {
 
-  test("GET", async ({ request }) => {
+  test("get a list of foods from Chick-Fil-A", async ({ request }) => {
     const url = new URL("/api/nutritionix/search", env.NEXT_PUBLIC_SITE_ORIGIN);
 
     const params = new URLSearchParams([
