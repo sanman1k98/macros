@@ -1,6 +1,5 @@
 import { expect, test } from '@playwright/test';
 import { env } from "@/env.mjs";
-import { URLSearchParams } from 'url';
 
 test.describe("GET", async () => {
 
