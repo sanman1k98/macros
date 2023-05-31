@@ -20,6 +20,16 @@ test.describe("GET", async () => {
 
     const data = await res.json();
     expect(data).toHaveProperty("branded");
-    expect(data.branded.length).toBeGreaterThan(1);
+
+    const { branded } = data;
+    expect.soft(branded.length).toBeGreaterThan(1);
+
+    branded.map((item: any) => {
+      console.log(item);
+      expect.soft(item).toHaveProperty("food_name");
+      expect.soft(item).toHaveProperty("brand_name");
+      expect.soft(item).toHaveProperty("nix_brand_id");
+      expect.soft(item).toHaveProperty("nix_item_id");
+    });
   });
 });
