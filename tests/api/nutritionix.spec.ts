@@ -32,4 +32,36 @@ test.describe("GET", async () => {
       expect.soft(item).toHaveProperty("nix_item_id");
     });
   });
+
+  test("get Chick-Fil-A food items below 300 calories", async ({ request }) => {
+    test.fixme(true, "child query fails");
+    const url = new URL("/api/nutritionix/search", env.NEXT_PUBLIC_SITE_ORIGIN);
+
+    const body = {
+      query: "chick fil a",
+      branded: true,
+      branded_type: 1,
+      common: false,
+      full_nutrients: {
+        "208": { lte: 300 }
+      },
+    }
+
+    const res = await request.post(url.href, { data: body });
+    expect.soft(res).toBeOK();
+
+    const data = await res.json();
+    expect(data).toHaveProperty("branded");
+
+    const { branded } = data;
+    expect.soft(branded.length).toBeGreaterThan(1);
+
+    branded.map((item: any) => {
+      console.log(item);
+      expect.soft(item).toHaveProperty("food_name");
+      expect.soft(item).toHaveProperty("brand_name");
+      expect.soft(item).toHaveProperty("nix_brand_id");
+      expect.soft(item).toHaveProperty("nix_item_id");
+    });
+  });
 });
