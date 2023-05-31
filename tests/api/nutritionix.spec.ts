@@ -34,8 +34,7 @@ test.describe("GET", async () => {
     });
   });
 
-  test("get Chick-Fil-A food items below 300 calories", async ({ request }) => {
-    test.fixme(true, "child query fails");
+  test.skip("get Chick-Fil-A food items below 300 calories", async ({ request }) => {
     const url = new URL("/api/nutritionix/search", env.NEXT_PUBLIC_SITE_ORIGIN);
 
     const body = {
