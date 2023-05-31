@@ -25,24 +25,29 @@ export async function GET(req: NextRequest) {
   });
 }
 
+// FIXME: implement filtering logic
 export async function POST(req: NextRequest) {
   const url = new URL("/v2/search/instant", "https://trackapi.nutritionix.com");
 
-  const json = await req.text();
-  console.log(json);
+  // use as URL search params
+  // const json = await req.json();
+  //
+  // const res = await fetch(url.href, {
+  //   method: "GET",
+  //   headers: {
+  //     "x-app-id": env.NUTRITIONIX_APP_ID,
+  //     "x-app-key": env.NUTRITIONIX_APP_KEY,
+  //   },
+  // });
+  //
+  // const data = await res.json();
 
-  const res = await fetch(url.href, {
-    method: "POST",
-    headers: {
-      "x-app-id": env.NUTRITIONIX_APP_ID,
-      "x-app-key": env.NUTRITIONIX_APP_KEY,
-    },
-    body: json,
-  });
+  const msg = {
+    message: "Not implemented",
+    status: 501,
+  }
 
-  const data = await res.json();
-
-  return NextResponse.json(data, {
-    status: res.status,
+  return NextResponse.json(msg, {
+    status: msg.status,
   });
 }
