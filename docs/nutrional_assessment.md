@@ -57,6 +57,12 @@ where `TEE` is the Total Energy Expenditure and `weight_loss_rate` is the desire
 - Weight loss (0.5 kg/week): Multiply by 0.83
 - Extreme weight loss (1 kg/week): Multiply by 0.65
 
+### Macronutrient Distribution
+The distribution of macronutrients varies based on individual needs and goals. Here's a general guideline:
+- Carbohydrates: 45-65% of total daily calories
+- Proteins: 10-35% of total daily calories
+- Fats: 20-35% of total daily calories
+
 ## Usage
 
 To use the Calorie Calculator, you can call the provided functions with appropriate arguments. The example usage in the code calculates various calorie-related metrics based on the given weight, height, age, sex, and activity level.
