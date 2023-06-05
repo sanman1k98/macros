@@ -96,34 +96,14 @@ tee = calculate_tee(bmr, activity_level)
 if weight_goal == "loss":
     weight_loss_rate = calculate_weight_loss_rate(intensity)
     calories_needed = calculate_calories(tee, weight_loss_rate)
+    print("Calories needed for weight loss:", round(calories_needed))
 elif weight_goal == "gain":
     weight_gain_rate = calculate_weight_gain_rate(intensity)
     calories_needed = calculate_calories(tee, 0, weight_gain_rate)
+    print("Calories needed for weight gain:", round(calories_needed))
 else:
     raise ValueError("Invalid weight goal. Please choose either 'loss' or 'gain'.")
-
-maintain_weight_calories = calculate_calories(tee, 0)
-mild_weight_loss_calories = calculate_calories(tee, 0.25)
-weight_loss_calories = calculate_calories(tee, 0.5)
-extreme_weight_loss_calories = calculate_calories(tee, 1)
-mild_weight_gain_calories = calculate_calories(tee, 0, 1.1)
-moderate_weight_gain_calories = calculate_calories(tee, 0, 1.2)
-extreme_weight_gain_calories = calculate_calories(tee, 0, 1.4)
 
 print("BMI:", round(bmi, 2))
 print("BMR:", round(bmr))
 print("TEE:", round(tee))
-print("Calories needed to maintain weight:", round(maintain_weight_calories))
-if intensity == "low":
-    print("Calories needed for weight loss (0.25 kg/week):", round(mild_weight_loss_calories))
-elif intensity == "mild":
-    print("Calories needed for weight loss (0.5 kg/week):", round(weight_loss_calories))
-elif intensity == "high":
-    print("Calories needed for weight loss (1 kg/week):", round(extreme_weight_loss_calories))
-if intensity == "low":
-    print("Calories needed for weight gain (10% increase):", round(mild_weight_gain_calories))
-elif intensity == "mild":
-    print("Calories needed for weight gain (20% increase):", round(moderate_weight_gain_calories))
-elif intensity == "extreme":
-    print("Calories needed for weight gain (40% increase):", round(extreme_weight_gain_calories))
-print("Calories needed based on your weight goal and intensity:", round(calories_needed))
