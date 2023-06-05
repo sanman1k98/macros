@@ -101,3 +101,80 @@ print("Calories needed for mild weight loss (0.25 kg/week):", round(mild_weight_
 print("Calories needed for weight loss (0.5 kg/week):", round(weight_loss_calories))
 print("Calories needed for extreme weight loss (1 kg/week):", round(extreme_weight_loss_calories))
 ```
+
+Here is the example code for the nutrional assessment implemented in python, the code covers:
+- Calculating BMI, BMR, TEE
+- Accounts for level of activity
+- Calculates calories for weight loss and maintaining current weight
+    - Currently working on adding code for weight gain
+
+```
+def calculate_bmi(weight, height):
+    # Convert height from cm to meters
+    height_m = height / 100
+    
+    # Calculate BMI
+    bmi = weight / (height_m ** 2)
+    return bmi
+
+
+def calculate_bmr(weight, height, age, sex):
+    # Calculate BMR based on sex
+    if sex == "male":
+        bmr = 10 * weight + 6.25 * height - 5 * age + 5
+    else:
+        bmr = 10 * weight + 6.25 * height - 5 * age - 161
+    return bmr
+
+
+def calculate_tee(bmr, activity_level):
+    # Adjust BMR based on activity level
+    activity_factors = {
+        "sedentary": 1.2,
+        "lightly active": 1.375,
+        "moderately active": 1.55,
+        "very active": 1.725,
+        "extra active": 1.9
+    }
+    tee = bmr * activity_factors.get(activity_level, 1.2)
+    return tee
+
+
+def calculate_calories(tee, weight_loss_rate):
+    # Calculate calories needed for weight loss
+    calories_per_kg = 7700
+    calories_needed = tee
+    
+    if weight_loss_rate == 0.25:
+        calories_needed *= 0.91
+    elif weight_loss_rate == 0.5:
+        calories_needed *= 0.83
+    elif weight_loss_rate == 1:
+        calories_needed *= 0.65
+    
+    return calories_needed
+
+
+# Example usage
+weight = 70 # kg
+height = 170 # cm
+age = 24
+sex = "male"
+activity_level = "lightly active"
+
+bmi = calculate_bmi(weight, height)
+bmr = calculate_bmr(weight, height, age, sex)
+tee = calculate_tee(bmr, activity_level)
+maintain_weight_calories = calculate_calories(tee, 0)
+mild_weight_loss_calories = calculate_calories(tee, 0.25)
+weight_loss_calories = calculate_calories(tee, 0.5)
+extreme_weight_loss_calories = calculate_calories(tee, 1)
+
+print("BMI:", round(bmi, 2))
+print("BMR:", round(bmr))
+print("TEE:", round(tee))
+print("Calories needed to maintain weight:", round(maintain_weight_calories))
+print("Calories needed for mild weight loss (0.25 kg/week):", round(mild_weight_loss_calories))
+print("Calories needed for weight loss (0.5 kg/week):", round(weight_loss_calories))
+print("Calories needed for extreme weight loss (1 kg/week):", round(extreme_weight_loss_calories))
+```
