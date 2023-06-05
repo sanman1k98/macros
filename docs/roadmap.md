@@ -95,5 +95,7 @@ Able to make food recommendations by pulling data from Nutrinix and running it t
     - From here the generated recommendations should be displayed as clickable cards or clickable list options where the user can select one or more of the recommendations
     - Upon selections, user can now save the selected recommendations as a menu list
     - The menu list can now be viewed on the landing page and later can be found in the history tab for the user to view
+
+    - The biometrics we take from the  `MyProfile` setup will be used to calculate that individual's BMI, BMR, TEE, and Calories needed [a link](https://github.com/sanman1k98/macros/blob/main/docs/nutrional_assessment.md)
 - ## Settings:
     - User can modify all aspects of their MyProfile Setup but cannot modify the Sign Up setup
