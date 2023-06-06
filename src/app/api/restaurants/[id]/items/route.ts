@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { env } from "@/env.mjs";
 
-// Do not cache this route.
-export const revalidate = false;
-
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   // TODO: extract this fetch call into its own function
   const list = await fetch("https://d1gvlspmcma3iu.cloudfront.net/restaurants-3d-party.json.gz");
@@ -29,11 +26,13 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
   searchParams.set("branded_type", String(1));  // 1 = restaurant
   searchParams.set("branded_region", String(1)) // 1 = US
 
+  // Caches the result by default
   const res = await fetch(`${url.href}?${searchParams.toString()}`, {
     headers: {
       "x-app-id": env.NUTRITIONIX_APP_ID,
       "x-app-key": env.NUTRITIONIX_APP_KEY,
     },
+    cache: "force-cache",
   });
 
   const data = await res.json() as { branded: any[] };
