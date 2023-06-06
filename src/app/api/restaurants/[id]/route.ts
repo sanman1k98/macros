@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export const revalidate = 3600;
-
 export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
   // TODO: extract this fetch call into its own function
   const res = await fetch("https://d1gvlspmcma3iu.cloudfront.net/restaurants-3d-party.json.gz");
