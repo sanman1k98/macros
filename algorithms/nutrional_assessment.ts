@@ -108,6 +108,7 @@ function calculateBMI(weight: number, height: number): number {
     throw new Error("Invalid weight goal. Please choose either 'loss' or 'gain'.");
   }
   
+  
   console.log("BMI:", Math.round(bmi * 100) / 100);
   console.log("BMR:", Math.round(bmr));
   console.log("TEE:", Math.round(tee));
