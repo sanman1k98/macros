@@ -64,14 +64,14 @@ Able to make food recommendations by pulling data from Nutrinix and running it t
 
 ## Workflow:
 - ### Authentication:
-    - Sign Up:
+    - Sign Up (set in stone, user cannot change after registration):
         - First Name
         - Last Name
         - DOB
         - Gmail
     - Upon signing up, user is brought to the landing page
     - When the user clicks on the “+” button to go to the recommendations generation page, it will redirect to the My Profile Setup first
-    - ### My Profile Setup:
+    - ### My Profile Setup (not set in stone, user can change over time):
         - What are your nutritional goals ?
             - Lose Weight
             - Gain Weight
