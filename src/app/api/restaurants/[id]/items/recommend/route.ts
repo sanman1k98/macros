@@ -6,11 +6,6 @@ import createPrompt from "./prompt";
 import { env } from "@/env.mjs";
 
 export async function POST(_req: NextRequest, { params }: { params: { id: string } }) {
-  const supabase = createRouteHandlerSupabaseClient({
-    headers,
-    cookies,
-  });
-
   // TODO: extract this fetch call into its own function
   const res = await fetch(
     "https://d1gvlspmcma3iu.cloudfront.net/restaurants-3d-party.json.gz"
@@ -31,43 +26,6 @@ export async function POST(_req: NextRequest, { params }: { params: { id: string
       apiKey: env.OPENAI_API_KEY,
     })
   );
-
-  // Gets session information from the "supabase-auth-token" cookie
-  const {
-    data: { session },
-    error: authError,
-  } = await supabase.auth.getSession();
-
-  if (authError) {
-    return NextResponse.json(authError.message, { status: authError.status });
-  } else if (!session) {
-    return NextResponse.json("User is not authenticated", { status: 401 });
-  }
-
-  const {
-    data: profile,
-    error: pgError,
-    status,
-    statusText,
-  } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", session.user.id)
-    .single();
-
-  if (pgError) {
-    return NextResponse.json(pgError, {
-      status: status,
-      statusText: statusText,
-    });
-  } else if (!profile) {
-    return NextResponse.json(
-      { message: "Profile for authenticated user not found" },
-      {
-        status: 400,
-      }
-    );
-  }
 
   try {
     const menu = await fetch(
@@ -95,7 +53,7 @@ export async function POST(_req: NextRequest, { params }: { params: { id: string
         items: items,
       },
       {
-        status: status,
+        status: completion.status,
         statusText: completion.statusText,
       }
     );
