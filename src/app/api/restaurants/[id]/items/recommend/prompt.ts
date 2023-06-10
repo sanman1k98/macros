@@ -10,7 +10,9 @@ type FoodItem = {
  */
 function createFoodItemListString(items: FoodItem[]) {
   let ret = "";
-  items.map(item => ret.concat(`${item.food_name} with ${item.nf_calories} calories`, "\n"));
+  items.map(item => {
+    ret = ret.concat(`${item.food_name} with ${item.nf_calories} calories`, "\n")
+  });
   return ret;
 }
 
@@ -28,7 +30,8 @@ export default function createPrompt(restaurant: string, items: FoodItem[]) {
     menu items from ${restaurant} and select 3-5 food recommendations that are
     best for a healthy 21 year old. Here are the menu items and their calorie
     counts:
-    ${createFoodItemListString(items)}
   `
-  return prompt.replace(/\s+/g, ' ').trim();
+  prompt = prompt.replace(/\s+/g, ' ').trim();
+
+  return prompt.concat(`\n\n${createFoodItemListString(items)}`)
 }
