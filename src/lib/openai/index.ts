@@ -31,8 +31,14 @@ export async function runRestaurantRecommendation(id: string) {
       name: "getRestaurantItems",
       description: "Get the menu items from a restaurant",
       parameters: {
-        type: "string",
-        description: "The id of the restaurant which is a 24-character long alphanumeric string e.g., '513fbc1283aa2dc80c000025'",
+        // NOTE: The JSON schema passed in must be an object at the root
+        type: "object",
+        properties: {
+          args: {
+            type: "string",
+            description: "The id of the restaurant which is a 24-character long alphanumeric string e.g., '513fbc1283aa2dc80c000025'",
+          },
+        },
       },
     },
   ];
@@ -46,8 +52,8 @@ export async function runRestaurantRecommendation(id: string) {
   const msg1 = res1.data.choices[0].message;
 
   if (msg1 && msg1.function_call && msg1.function_call.name === "getRestaurantItems" ) {
-    const args = msg1.function_call.arguments!;
-    const functionResponse = await nix.getRestaurantItems(JSON.parse(args));
+    const args = JSON.parse(msg1.function_call.arguments!).args;
+    const functionResponse = await nix.getRestaurantItems(args);
 
     messages.push(msg1);
 
