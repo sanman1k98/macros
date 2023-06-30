@@ -1,6 +1,6 @@
 import {
-  Configuration,
   OpenAIApi,
+  Configuration,
   type ChatCompletionRequestMessage,
 } from "openai";
 import { env } from "@/env.mjs";
@@ -20,7 +20,10 @@ export async function runRestaurantRecommendation(id: string) {
 
   const name = nix.restaurants.get(id);
 
-  const prompt = `Can you be an expert nutrinionist and recommend me a healthy meal from ${name} with the ID "${id}"?`;
+  const prompt = `
+    Can you be an expert nutrinionist and rate the food items on a scale from 1-10 from restaurant ${name} with the ID "${id}"? Give me your reasoning for your ratings as well as any nutritional info you may have on each item.
+  `;
+
   const messages: ChatCompletionRequestMessage[] = [{
     role: "user",
     content: prompt,
@@ -51,7 +54,7 @@ export async function runRestaurantRecommendation(id: string) {
 
   const msg1 = res1.data.choices[0].message;
 
-  if (msg1 && msg1.function_call && msg1.function_call.name === "getRestaurantItems" ) {
+  if (msg1 && msg1.function_call && msg1.function_call.name === "getRestaurantItems") {
     const args = JSON.parse(msg1.function_call.arguments!).args;
     const functionResponse = await nix.getRestaurantItems(args);
 
@@ -68,6 +71,21 @@ export async function runRestaurantRecommendation(id: string) {
       messages: messages,
     });
 
-    return res2;
+    // return res2;
+
+    messages.push({
+      role: "system",
+      prompt: "Ren"
+    });
+
+    const res3 = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo-0613",
+      messages: messages,
+      functions: [ 
+        {
+          name: "placeholder",
+        }
+      ]
+    })
   }
 }
