@@ -75,7 +75,7 @@ export async function runRestaurantRecommendation(id: string) {
 
     messages.push({
       role: "system",
-      prompt: "Ren"
+      content: ""
     });
 
     const res3 = await openai.createChatCompletion({
@@ -83,9 +83,44 @@ export async function runRestaurantRecommendation(id: string) {
       messages: messages,
       functions: [ 
         {
-          name: "placeholder",
-        }
+          name: "showFoodItems",
+          description: "Show the user each food item with their respective nutritional details and ratings",
+          parameters: {
+            type: "object",
+            properties: {
+              args: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    "foodItem": {
+                      "type": "string",
+                      "description": "Name of the food item"
+                    },
+                    "details": {
+                      "type": "object",
+                      "properties": {
+                        "calories": {
+                          "type": "integer",
+                          "description": "Number of calories"
+                        },
+                        "rating": {
+                          "type": "string",
+                          "enum": ["very good", "good", "okay", "bad", "very bad"],
+                          "description": "Nutritional rating for this food",
+                        },
+                      },
+                      "required": ["calories", "rating"],
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       ]
-    })
+    });
+
+    return res3;
   }
 }
