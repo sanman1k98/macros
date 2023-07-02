@@ -109,6 +109,10 @@ export async function runRestaurantRecommendation(id: string) {
                           "enum": ["very good", "good", "okay", "bad", "very bad"],
                           "description": "Nutritional rating for this food",
                         },
+                        "reasoning": {
+                          "type": "string",
+                          "description": "Reasoning for the rating given to this food item",
+                        },
                       },
                       "required": ["calories", "rating"],
                     },
